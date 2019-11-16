@@ -2,7 +2,7 @@ import React from "react";
 import SearchBox from "./SearchBox.js";
 import "../styles/Nav.css";
 
-function Nav({handleSearchChange}) {
+function Nav({handleSearchChange, handleSubmit}) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <button
@@ -23,12 +23,13 @@ function Nav({handleSearchChange}) {
               DOB
             </span>
           </div>
-          <input type="date" className="form-control" />
-          <input type="date" className="form-control" />
+          <input type="date" className="form-control" id="start" />
+          <input type="date" className="form-control" id="end" />
         </div>
         <div className="search-area col-4">
           <SearchBox 
             handleSearchChange={handleSearchChange}
+            handleSubmit={handleSubmit}
           />
         </div>
       </div>

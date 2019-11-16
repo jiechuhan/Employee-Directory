@@ -72,7 +72,6 @@ function DataArea() {
     console.log(event.target.value);
     const filter = event.target.value;
     const filteredList = staff.users.filter(item => {
-      // merge data together, then see if user input is anywhere inside
       let values = Object.values(item)
         .join("")
         .toLowerCase();
@@ -91,10 +90,32 @@ function DataArea() {
     });
   }, []);
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    let start = document.getElementById("start").value.split('-').join("");
+    let end = document.getElementById("end").value.split('-').join("");;
+
+    if (start && end) {
+      const filteredList = staff.users.filter(item => {
+        
+        let dob = item.dob.date.split("T")
+        dob = dob[0].split("-").join("")
+
+        return dob > start && dob < end;
+      })
+
+      setStaff({
+        filteredUsers: filteredList,
+        ...staff
+      });
+    }
+  }
+
   return (
     <StaffContext.Provider value={staff}>
       <div>
-        <Nav handleSearchChange={handleSearchChange} />
+        <Nav handleSearchChange={handleSearchChange} handleSubmit={handleSubmit}/>
         <div className="data-area">
           <DataTable
             handleSort={handleSort}
